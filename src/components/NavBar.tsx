@@ -23,10 +23,10 @@ export default async function Navbar() {
         <aside className="flex justify-center items-center gap-1">
           {user && (
             <Link
-              href="/"
+              href="/add"
               className="self-center text-base font-semibold border-2 px-1 rounded-md hover:bg-yellow-200 hover:text-blue-900"
             >
-              Create
+              Add
             </Link>
           )}
           <Link
@@ -36,7 +36,7 @@ export default async function Navbar() {
             Users
           </Link>
           <Link
-            href="/"
+            href="/faq"
             className="self-center text-base font-semibold border-2 px-1 rounded-md hover:bg-yellow-200 hover:text-blue-900"
           >
             FAQ

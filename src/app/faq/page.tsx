@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 const FaqPage = () => {
   return (
-    <div className="flex min-h-screen flex-col justify-start gap-4 sm:gap-8 p-4">
+    <div className="flex flex-grow flex-col justify-start gap-4 sm:gap-8 p-4">
       <h1 className="text-base sm:text-2xl font-bold text-center border rounded-md">
         Frequently Asked Questions Essay
       </h1>

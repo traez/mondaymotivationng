@@ -19,7 +19,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-trebuchetMs min-h-screen">
+      <body className="font-trebuchetMs flex flex-col min-h-screen">
         <NextThemeProvider>
           <NavBar />
           {children}
