@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
-//import { addQuoteEntry } from "@/lib/actionsQuoteEntry";
+import { addQuoteEntry } from "@/lib/quoteHandlers";
 
 const quoteSchema = z.object({
   userEmail: z.string(),
@@ -50,8 +50,8 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
       userEmail: userEmailSplit,
       id: uuidv4(),
     };
-
-    //await addQuoteEntry(formattedData); // Assume this sends the quote data
+console.log(formattedData);
+    await addQuoteEntry(formattedData); 
     console.log(formattedData);
     reset();
     router.replace("/?timestamp=" + new Date().getTime());

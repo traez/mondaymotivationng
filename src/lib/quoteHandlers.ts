@@ -2,7 +2,7 @@ import { QuoteSchemaType } from "@/components/AddQuote";
 
 async function addQuoteEntry(quoteData: QuoteSchemaType) {
   try {
-    const response = await fetch("/api/addQuoteEntry", {
+    const response = await fetch("/api/quotes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
