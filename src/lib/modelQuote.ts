@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema({
   createdAt: { type: String, required: true }, // Format: DD/MM/YYYY
 });
 
-const quoteSchema = new mongoose.Schema({
+const  quoteSchema = new mongoose.Schema({
   userEmail: { type: String, required: true },
   id: { type: String, required: true },
   createdAt: { type: String, required: true }, // Format: DD/MM/YYYY
