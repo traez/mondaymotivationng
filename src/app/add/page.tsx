@@ -12,7 +12,7 @@ export default async function AddPage() {
     const userEmail = session?.user?.email;
 
   return (
-    <div className="flex-grow p-4">
+    <div className="flex-grow p-4 bg-slate-100 dark:bg-gray-500">
       {session?.user ? (
         <>
           <h1 className="text-2xl font-bold mb-4">Add a New Quote</h1>

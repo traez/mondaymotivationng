@@ -30,7 +30,7 @@ export default async function Navbar() {
             </Link>
           )}
           <Link
-            href="/"
+            href="/users"
             className="self-center text-base font-semibold border-2 px-1 rounded-md hover:bg-yellow-200 hover:text-blue-900"
           >
             Users

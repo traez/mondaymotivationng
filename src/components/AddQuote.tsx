@@ -50,20 +50,20 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
       userEmail: userEmailSplit,
       id: uuidv4(),
     };
-console.log(formattedData);
-    await addQuoteEntry(formattedData); 
+    console.log(formattedData);
+    await addQuoteEntry(formattedData);
     console.log(formattedData);
     reset();
     router.replace("/?timestamp=" + new Date().getTime());
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-[90%] max-w-[570px] min-w-[260px] mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Add New Quote</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 dark:text-[#003759]">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-lg font-bold">
             User Email
           </label>
           <input
@@ -75,7 +75,7 @@ console.log(formattedData);
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-lg font-bold">
             Created At
           </label>
           <input
@@ -87,12 +87,12 @@ console.log(formattedData);
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-lg font-bold">
             Motivational Quote
           </label>
           <textarea
             {...register("motivation")}
-            className="mt-1 block w-full rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm pl-2"
+            className="mt-1 block w-full rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm pl-2 h-[90px] bg-gray-100 text-gray-700"
             placeholder="Enter a motivational quote"
             maxLength={300}
           />
@@ -102,7 +102,7 @@ console.log(formattedData);
         </div>
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-[#003759] dark:bg-[#006EB1] text-[#D3EEFF] hover:bg-[#0BA3FF] text-[#003759] dark:text-[#D3EEFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Add Quote
         </button>
