@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import { QuoteWithMongoId } from "@/lib/typeQuote";
 import { User } from "@/lib/typeGetSession";
 
@@ -30,9 +31,9 @@ const QuoteItem: React.FC<QuoteItemProps> = ({ entry, user }) => {
 
       {/* See More Button */}
      <menu className="flex justify-between items-center">
-        <button className="px-4 py-2 bg-[#003759] dark:bg-[#006EB1] text-[#D3EEFF] text-sm font-medium rounded hover:bg-[#0BA3FF] focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <Link href={`/motivation/${entry.mongoId}`} className="px-4 py-2 bg-[#003759] dark:bg-[#006EB1] text-[#D3EEFF] text-sm font-medium rounded hover:bg-[#0BA3FF] focus:outline-none focus:ring-2 focus:ring-indigo-500">
           See More
-        </button>
+        </Link>
         <div className="flex flex-col items-center">
           <b className="text-2xl font-bold">{entry.score}</b>
           <span className="text-sm">Score</span>
@@ -43,10 +44,3 @@ const QuoteItem: React.FC<QuoteItemProps> = ({ entry, user }) => {
 };
 
 export default QuoteItem;
-
-/*
-  <button className="px-4 py-2 bg-[#003759] dark:bg-[#006EB1] text-[#D3EEFF] text-sm font-medium rounded hover:bg-[#0BA3FF] focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        See More
-      </button>
-
-*/

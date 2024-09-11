@@ -2,18 +2,23 @@ import { QuoteSchemaType } from "@/components/AddQuote";
 
 async function addQuoteEntry(quoteData: QuoteSchemaType) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quotes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(quoteData),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quoteData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.text();
       console.error("Server response:", errorData);
-      throw new Error(`Failed to add quote entry: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to add quote entry: ${response.status} ${response.statusText}`
+      );
     }
 
     return await response.json();
@@ -25,12 +30,15 @@ async function addQuoteEntry(quoteData: QuoteSchemaType) {
 
 async function fetchQuotes() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quotes`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch quotes");
@@ -43,4 +51,35 @@ async function fetchQuotes() {
   }
 }
 
-export { addQuoteEntry, fetchQuotes };
+async function fetchQuoteById(id: string) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Server response:", errorData);
+      throw new Error(
+        `Failed to fetch quote: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching quote by ID:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to fetch quote: ${error.message}`);
+    } else {
+      throw new Error("Failed to fetch quote: An unknown error occurred");
+    }
+  }
+}
+
+export { addQuoteEntry, fetchQuotes, fetchQuoteById };
