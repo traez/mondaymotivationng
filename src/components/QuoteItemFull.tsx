@@ -1,9 +1,18 @@
+import { User } from "@/lib/typeGetSession";
+import { QuoteWithMongoId } from "@/lib/typeQuote";
 
-
-const QuoteItemFull = () => {
-  return (
-    <div>QuoteItemFull</div>
-  )
+interface QuoteItemFullProps {
+  user: User | null;
+  quote: QuoteWithMongoId;
 }
 
-export default QuoteItemFull
+export default async function QuoteItemFull({
+  user,
+  quote,
+}: QuoteItemFullProps) {
+  return (
+    <div>
+      <h1>QuoteItemFull</h1>
+    </div>
+  );
+}
