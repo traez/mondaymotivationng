@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "./globals.css";
 import { NextThemeProvider } from "../components/NextThemeProvider";
 import NavBar from "@/components/NavBar";
@@ -25,6 +26,7 @@ export default async function RootLayout({
           {children}
           <Footer />
         </NextThemeProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

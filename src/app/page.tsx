@@ -11,7 +11,7 @@ export default async function Home() {
           <span>Monday Motivation NG</span>
         </div>
         <h2 className="text-sm sm:text-xl text-center border rounded-md">
-        Get yourself motivated on Monday and all days
+        Get yourself motivated on Monday and all days ...with Reddit style scoring
         </h2>
         {session?.user && (
           <div className="mt-6">
