@@ -82,4 +82,77 @@ async function fetchQuoteById(id: string) {
   }
 }
 
-export { addQuoteEntry, fetchQuotes, fetchQuoteById };
+async function deleteQuoteById(id: string) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Server response:", errorData);
+      throw new Error(
+        `Failed to delete quote: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting quote by ID:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to delete quote: ${error.message}`);
+    } else {
+      throw new Error("Failed to delete quote: An unknown error occurred");
+    }
+  }
+}
+
+async function voteQuoteById(
+  id: string,
+  userEmailSplit: string,
+  voteType: "up" | "down"
+) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userEmailSplit, voteType }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Server response:", errorData);
+      throw new Error(
+        `Failed to vote on quote: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error voting on quote:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to vote on quote: ${error.message}`);
+    } else {
+      throw new Error("Failed to vote on quote: An unknown error occurred");
+    }
+  }
+}
+
+export {
+  addQuoteEntry,
+  fetchQuotes,
+  fetchQuoteById,
+  deleteQuoteById,
+  voteQuoteById,
+};
