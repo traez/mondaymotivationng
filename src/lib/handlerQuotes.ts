@@ -149,10 +149,35 @@ async function voteQuoteById(
   }
 }
 
+async function fetchQuotesByUserEmail(userEmail: string) {
+  try {
+    const response = await fetch(
+      `/api/quotes/useremail?userEmail=${encodeURIComponent(userEmail)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching quotes by user email:", error);
+    throw error;
+  }
+}
+
 export {
   addQuoteEntry,
   fetchQuotes,
   fetchQuoteById,
   deleteQuoteById,
   voteQuoteById,
+  fetchQuotesByUserEmail,
 };

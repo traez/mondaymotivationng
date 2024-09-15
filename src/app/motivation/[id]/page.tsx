@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import QuoteItemFull from "@/components/QuoteItemFull";
-import { fetchQuoteById } from "@/lib/quoteHandlers";
+import { fetchQuoteById } from "@/lib/handlerQuotes";
 import { QuoteWithMongoId } from "@/lib/typeQuote";
 import { getSession } from "@/lib/getSession";
 

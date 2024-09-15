@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
-import { addQuoteEntry } from "@/lib/quoteHandlers";
+import { addQuoteEntry } from "@/lib/handlerQuotes";
 
 const quoteSchema = z.object({
   userEmail: z.string(),
@@ -61,11 +61,12 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
     <div className="w-[90%] max-w-[570px] min-w-[260px] mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Add New Quote</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 dark:text-[#003759]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 dark:text-[#003759]"
+      >
         <div>
-          <label className="block text-lg font-bold">
-            User Email
-          </label>
+          <label className="block text-lg font-bold">User Email</label>
           <input
             type="text"
             value={userEmail || ""}
@@ -75,9 +76,7 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
           />
         </div>
         <div>
-          <label className="block text-lg font-bold">
-            Created At
-          </label>
+          <label className="block text-lg font-bold">Created At</label>
           <input
             type="text"
             value={createdDateFormat}
@@ -87,9 +86,7 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
           />
         </div>
         <div>
-          <label className="block text-lg font-bold">
-            Motivational Quote
-          </label>
+          <label className="block text-lg font-bold">Motivational Quote</label>
           <textarea
             {...register("motivation")}
             className="mt-1 block w-full rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm pl-2 h-[90px] bg-gray-100 text-gray-700"

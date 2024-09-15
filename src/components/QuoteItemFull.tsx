@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { User } from "@/lib/typeGetSession";
 import { QuoteWithMongoId } from "@/lib/typeQuote";
-import { deleteQuoteById, voteQuoteById } from "@/lib/quoteHandlers";
+import { deleteQuoteById, voteQuoteById } from "@/lib/handlerQuotes";
 
 interface QuoteItemFullProps {
   user: User | null;
@@ -15,7 +15,7 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(quote.comments);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editedCommentText, setEditedCommentText] = useState(""); 
+  const [editedCommentText, setEditedCommentText] = useState("");
   const userEmailSplit = user?.email.split("@")[0] || "Anonymous";
   const router = useRouter();
 
@@ -75,7 +75,7 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
   };
 
   const handleEditComment = (commentId: string) => {
-   /*  const commentToEdit = comments?.find((comment) => comment.id === commentId);
+    /*  const commentToEdit = comments?.find((comment) => comment.id === commentId);
     if (commentToEdit) {
       setEditingCommentId(commentId);
       setEditedCommentText(commentToEdit.text);
@@ -83,7 +83,7 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
   };
 
   const handleSaveComment = () => {
-/*     if (editingCommentId) {
+    /*     if (editingCommentId) {
       const updatedComments = comments?.map((comment) =>
         comment.id === editingCommentId
           ? { ...comment, text: editedCommentText }
@@ -96,7 +96,7 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
   };
 
   const handleDeleteComment = (commentId: string) => {
-  /*   setComments(comments?.filter((comment) => comment.id !== commentId)); */
+    /*   setComments(comments?.filter((comment) => comment.id !== commentId)); */
   };
 
   return (
