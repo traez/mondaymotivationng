@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import Quote from "@/lib/modelQuote";
 
-async function GET(request: Request, { params }: { params: { id: string } }) {
+async function GET(request: Request, { params }: { params: { quoteid: string } }) {
   try {
-    const { id } = params;
-    const quote = await Quote.findById(id);
+    const { quoteid } = params;
+    const quote = await Quote.findById(quoteid);
 
     if (!quote) {
       return NextResponse.json({ error: "Quote not found" }, { status: 404 });
@@ -36,11 +36,11 @@ async function GET(request: Request, { params }: { params: { id: string } }) {
 
 async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { quoteid: string } }
 ) {
   try {
-    const { id } = params;
-    const deletedQuote = await Quote.findByIdAndDelete(id);
+    const { quoteid } = params;
+    const deletedQuote = await Quote.findByIdAndDelete(quoteid);
 
     if (!deletedQuote) {
       return NextResponse.json({ error: "Quote not found" }, { status: 404 });
@@ -72,13 +72,13 @@ async function DELETE(
 
 async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { quoteid: string } }
 ) {
   try {
-    const { id } = params;
+    const { quoteid } = params;
     const { userEmailSplit, voteType } = await request.json();
 
-    const quote = await Quote.findById(id);
+    const quote = await Quote.findById(quoteid);
 
     if (!quote) {
       return NextResponse.json({ error: "Quote not found" }, { status: 404 });

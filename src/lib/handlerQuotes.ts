@@ -51,10 +51,10 @@ async function fetchQuotes() {
   }
 }
 
-async function fetchQuoteById(id: string) {
+async function fetchQuoteById(quoteid: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${quoteid}`,
       {
         method: "GET",
         headers: {
@@ -82,10 +82,10 @@ async function fetchQuoteById(id: string) {
   }
 }
 
-async function deleteQuoteById(id: string) {
+async function deleteQuoteById(quoteid: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${quoteid}`,
       {
         method: "DELETE",
         headers: {
@@ -114,13 +114,13 @@ async function deleteQuoteById(id: string) {
 }
 
 async function voteQuoteById(
-  id: string,
+  quoteid: string,
   userEmailSplit: string,
   voteType: "up" | "down"
 ) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${quoteid}`,
       {
         method: "PATCH",
         headers: {
@@ -146,6 +146,29 @@ async function voteQuoteById(
     } else {
       throw new Error("Failed to vote on quote: An unknown error occurred");
     }
+  }
+}
+
+async function fetchUserEmails() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/emails`, 
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user emails");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user emails:", error);
+    throw new Error("Failed to fetch user emails");
   }
 }
 
@@ -179,5 +202,6 @@ export {
   fetchQuoteById,
   deleteQuoteById,
   voteQuoteById,
+  fetchUserEmails,
   fetchQuotesByUserEmail,
 };

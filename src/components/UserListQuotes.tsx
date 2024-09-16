@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { User } from "@/lib/typeGetSession";
-import { fetchUserEmails } from "@/lib/handlerEmails";
+import { fetchUserEmails } from "@/lib/handlerQuotes";
 import UserQuotes from "@/components/UserQuotes";
 
 interface UserListQuotesProps {
