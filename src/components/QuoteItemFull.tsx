@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { User } from "@/lib/typeGetSession";
 import { QuoteWithMongoId } from "@/lib/typeQuote";
 import { deleteQuoteById, voteQuoteById } from "@/lib/handlerQuotes";
+import CommentFull from "./CommentFull";
 
 interface QuoteItemFullProps {
   user: User | null;
@@ -12,10 +12,6 @@ interface QuoteItemFullProps {
 }
 
 export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
-  const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(quote.comments);
-  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editedCommentText, setEditedCommentText] = useState("");
   const userEmailSplit = user?.email.split("@")[0] || "Anonymous";
   const router = useRouter();
 
@@ -59,44 +55,6 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
       toast.error("Failed to delete quote");
       console.error("Error deleting quote:", error);
     }
-  };
-
-  const handleAddComment = () => {
-    /*   if (commentText.trim()) {
-      const newComment = {
-        id: new Date().toISOString(),
-        voterEmail: user?.email || "Anonymous",
-        text: commentText,
-        createdAt: new Date().toLocaleDateString("en-GB"),
-      };
-      setComments([...comments, newComment]);
-      setCommentText("");
-    } */
-  };
-
-  const handleEditComment = (commentId: string) => {
-    /*  const commentToEdit = comments?.find((comment) => comment.id === commentId);
-    if (commentToEdit) {
-      setEditingCommentId(commentId);
-      setEditedCommentText(commentToEdit.text);
-    } */
-  };
-
-  const handleSaveComment = () => {
-    /*     if (editingCommentId) {
-      const updatedComments = comments?.map((comment) =>
-        comment.id === editingCommentId
-          ? { ...comment, text: editedCommentText }
-          : comment
-      );
-      setComments(updatedComments);
-      setEditingCommentId(null);
-      setEditedCommentText("");
-    } */
-  };
-
-  const handleDeleteComment = (commentId: string) => {
-    /*   setComments(comments?.filter((comment) => comment.id !== commentId)); */
   };
 
   return (
@@ -164,79 +122,12 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
         Delete Quote
       </button>
 
-      {/* Comments Section */}
-      <div className="mt-6">
-        <h2 className="text-xl font-bold">Comments:</h2>
-
-        {/* Add Comment */}
-        <div className="mt-4 flex flex-col">
-          <textarea
-            className="p-2 border border-gray-300 rounded-md mb-2 bg-gray-100 text-gray-700"
-            rows={3}
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            placeholder="Add a comment..."
-          ></textarea>
-          <button
-            className="self-end px-4 py-2 bg-blue-500 hover:bg-blue-800 text-white rounded-lg"
-            onClick={handleAddComment}
-          >
-            Submit
-          </button>
-        </div>
-
-        {/* Comment List */}
-        <ul className="mt-4 space-y-4">
-          {comments?.map((comment) => (
-            <li
-              key={comment.id}
-              className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md"
-            >
-              {editingCommentId === comment.id ? (
-                <div>
-                  <textarea
-                    className="p-2 border border-gray-300 rounded-md mb-2"
-                    rows={3}
-                    value={editedCommentText}
-                    onChange={(e) => setEditedCommentText(e.target.value)}
-                  ></textarea>
-                  <button
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                    onClick={handleSaveComment}
-                  >
-                    Save
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-sm mb-2">{comment.text}</p>
-                  <div className="flex justify-between items-center">
-                    <small className="text-gray-500">
-                      By: {comment.voterEmail} on {comment.createdAt}
-                    </small>
-                    {user && user.email === comment.voterEmail && (
-                      <div className="space-x-2">
-                        <button
-                          className="text-blue-500"
-                          onClick={() => handleEditComment(comment.id)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="text-red-500"
-                          onClick={() => handleDeleteComment(comment.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Replace the Comments Section with the new component */}
+      <CommentFull
+        user={user}
+        quoteId={quote.mongoId}
+        initialComments={quote.comments || []}
+      />
     </div>
   );
 }
