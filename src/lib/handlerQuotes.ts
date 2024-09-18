@@ -1,4 +1,5 @@
 import { QuoteSchemaType } from "@/components/AddQuote";
+import { Comment } from "@/lib/typeComment";
 
 async function addQuoteEntry(quoteData: QuoteSchemaType) {
   try {
@@ -196,6 +197,34 @@ async function fetchQuotesByUserEmail(userEmail: string) {
   }
 }
 
+async function addComment(quoteId: string, commentData: Comment) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${quoteId}/comments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(commentData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Server response:", errorData);
+      throw new Error(
+        `Failed to add comment: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    throw new Error("Failed to add comment");
+  }
+}
+
 export {
   addQuoteEntry,
   fetchQuotes,
@@ -204,4 +233,5 @@ export {
   voteQuoteById,
   fetchUserEmails,
   fetchQuotesByUserEmail,
+  addComment,
 };

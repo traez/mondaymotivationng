@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { User } from "@/lib/typeGetSession";
 import { Comment } from "@/lib/typeComment";
 import { toast } from "sonner";
+import { addComment } from "@/lib/handlerQuotes";
 
 const commentSchema = z.object({
   text: z
@@ -28,8 +30,9 @@ export default function CommentFull({
   quoteId,
   initialComments,
 }: CommentFullProps) {
-  const [comments, setComments] = useState(initialComments);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const router = useRouter();
+  const userEmailSplit = user?.email?.split("@")[0] || "";
 
   const {
     register,
@@ -45,7 +48,6 @@ export default function CommentFull({
       toast.error("You must be signed in to add a comment.");
       return;
     }
-    const userEmailSplit = user.email.split("@")[0];
 
     const newComment: Comment = {
       id: uuidv4(),
@@ -62,12 +64,11 @@ export default function CommentFull({
     };
 
     try {
-      // TODO: Implement the API call to add the comment
-      // await addCommentToQuote(quoteId, newComment);
       console.log(newComment);
-      /* setComments([...comments, newComment]); */
+      await addComment(quoteId, newComment);
       toast.success("Comment added successfully");
       reset();
+      router.refresh();
     } catch (error) {
       toast.error("Failed to add comment");
       console.error("Error adding comment:", error);
@@ -141,7 +142,7 @@ export default function CommentFull({
 
       {/* Comment List */}
       <ul className="mt-4 space-y-4">
-        {comments?.map((comment) => (
+        {initialComments?.map((comment) => (
           <li
             key={comment.id}
             className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md"
@@ -167,21 +168,23 @@ export default function CommentFull({
               </form>
             ) : (
               <div>
-                <p className="text-sm mb-2">{comment.text}</p>
+                <p className="text-sm mb-2 text-gray-500 dark:text-slate-100">
+                  {comment.text}
+                </p>
                 <div className="flex justify-between items-center">
-                  <small className="text-gray-500">
+                  <small className="text-gray-900 dark:text-slate-400">
                     By: {comment.voterEmail} on {comment.createdAt}
                   </small>
-                  {user && user.email === comment.voterEmail && (
+                  {user && userEmailSplit === comment.voterEmail && (
                     <div className="space-x-2">
                       <button
-                        className="text-blue-500"
+                        className="text-blue-500 hover:text-blue-800"
                         onClick={() => handleEditComment(comment.id)}
                       >
                         Edit
                       </button>
                       <button
-                        className="text-red-500"
+                        className="text-red-500 hover:text-red-800"
                         onClick={() => handleDeleteComment(comment.id)}
                       >
                         Delete

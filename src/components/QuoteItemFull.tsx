@@ -115,12 +115,14 @@ export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
       </div>
 
       {/* Delete Quote Button */}
-      <button
-        className="px-4 py-2 bg-red-500 hover:bg-red-800 text-white rounded-lg mb-4"
-        onClick={handleDeleteQuote}
-      >
-        Delete Quote
-      </button>
+      {userEmailSplit === quote.userEmail && (
+        <button
+          className="px-4 py-2 bg-red-500 hover:bg-red-800 text-white rounded-lg mb-4"
+          onClick={handleDeleteQuote}
+        >
+          Delete Quote
+        </button>
+      )}
 
       {/* Replace the Comments Section with the new component */}
       <CommentFull

@@ -52,7 +52,6 @@ const AddQuote: React.FC<AddQuoteProps> = ({ userEmail }) => {
     };
     console.log(formattedData);
     await addQuoteEntry(formattedData);
-    console.log(formattedData);
     reset();
     router.replace("/?timestamp=" + new Date().getTime());
   };
