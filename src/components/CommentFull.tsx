@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "@/lib/typeGetSession";
-import { Comment } from "@/lib/typeComment";
+import { Comment, CommentWithMongoId } from "@/lib/typeQuoteComment";
 import { toast } from "sonner";
-import { addComment } from "@/lib/handlerQuotes";
+import { addComment, deleteCommentById } from "@/lib/handlerQuotes";
 
 const commentSchema = z.object({
   text: z
@@ -22,7 +22,7 @@ type CommentSchemaType = z.infer<typeof commentSchema>;
 interface CommentFullProps {
   user: User | null;
   quoteId: string;
-  initialComments: Comment[];
+  initialComments: CommentWithMongoId[];
 }
 
 export default function CommentFull({
@@ -106,15 +106,14 @@ export default function CommentFull({
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    /*  try {
-      // TODO: Implement the API call to delete the comment
-      // await deleteCommentFromQuote(quoteId, commentId);
-      setComments(comments.filter((comment) => comment.id !== commentId));
+    try {
+      await deleteCommentById(quoteId, commentId);
       toast.success("Comment deleted successfully");
+      router.refresh();
     } catch (error) {
       toast.error("Failed to delete comment");
       console.error("Error deleting comment:", error);
-    } */
+    }
   };
 
   return (
@@ -126,6 +125,7 @@ export default function CommentFull({
         <textarea
           className="p-2 border border-gray-300 rounded-md mb-2 bg-gray-100 text-gray-700"
           rows={3}
+          maxLength={300}
           {...register("text")}
           placeholder="Add a comment..."
         ></textarea>
@@ -152,6 +152,7 @@ export default function CommentFull({
                 <textarea
                   className="p-2 border border-gray-300 rounded-md mb-2 w-full"
                   rows={3}
+                  maxLength={300}
                   {...register("text")}
                 ></textarea>
                 {errors.text && (
@@ -179,13 +180,13 @@ export default function CommentFull({
                     <div className="space-x-2">
                       <button
                         className="text-blue-500 hover:text-blue-800"
-                        onClick={() => handleEditComment(comment.id)}
+                        onClick={() => handleEditComment(comment.mongoCid)}
                       >
                         Edit
                       </button>
                       <button
                         className="text-red-500 hover:text-red-800"
-                        onClick={() => handleDeleteComment(comment.id)}
+                        onClick={() => handleDeleteComment(comment.mongoCid)}
                       >
                         Delete
                       </button>

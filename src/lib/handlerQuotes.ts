@@ -1,5 +1,5 @@
 import { QuoteSchemaType } from "@/components/AddQuote";
-import { Comment } from "@/lib/typeComment";
+import { Comment } from "@/lib/typeQuoteComment";
 
 async function addQuoteEntry(quoteData: QuoteSchemaType) {
   try {
@@ -153,7 +153,7 @@ async function voteQuoteById(
 async function fetchUserEmails() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/emails`, 
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/emails`,
       {
         method: "GET",
         headers: {
@@ -225,6 +225,37 @@ async function addComment(quoteId: string, commentData: Comment) {
   }
 }
 
+async function deleteCommentById(quoteId: string, commentId: string) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quotes/${quoteId}/comments/${commentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Server response:", errorData);
+      throw new Error(
+        `Failed to delete comment: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting comment by ID:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to delete comment: ${error.message}`);
+    } else {
+      throw new Error("Failed to delete comment: An unknown error occurred");
+    }
+  }
+}
+
 export {
   addQuoteEntry,
   fetchQuotes,
@@ -234,4 +265,5 @@ export {
   fetchUserEmails,
   fetchQuotesByUserEmail,
   addComment,
+  deleteCommentById,
 };

@@ -1,5 +1,5 @@
 import { User } from "@/lib/typeGetSession";
-import { QuoteWithMongoId } from "@/lib/typeQuote";
+import { QuoteWithMongoId,QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
 import { fetchQuotes } from "@/lib/handlerQuotes";
 import QuoteItem from "./QuoteItem";
 
@@ -8,7 +8,7 @@ interface AllQuotesProps {
 }
 
 export default async function AllQuotes({ user }: AllQuotesProps) {
-  const fetchedQuotes: QuoteWithMongoId[] = await fetchQuotes();
+  const fetchedQuotes: QuoteCommentWithMongoId[] = await fetchQuotes();
 
   return (
     <>

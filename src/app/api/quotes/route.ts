@@ -9,17 +9,41 @@ async function POST(request: Request) {
     const newQuote = new Quote(quoteData);
     const savedQuote = await newQuote.save();
 
-    const { _id, __v, ...plainQuote } = savedQuote.toObject();
-    const result = { mongoId: _id.toString(), ...plainQuote };
+    // Destructure the saved quote
+    const {
+      _id: quoteId,
+      __v,
+      comments = [],
+      ...plainQuote
+    } = savedQuote.toObject();
+
+    // Format comments in case any exist (likely they are empty on POST)
+    const formattedComments = comments.map((comment: any) => {
+      const { _id: commentId, ...plainComment } = comment;
+      return { mongoCid: commentId.toString(), ...plainComment };
+    });
+
+    // Refactor result to match the GET format
+    const result = {
+      mongoId: quoteId.toString(),
+      ...plainQuote,
+      comments: formattedComments, // This will be an empty array initially
+    };
 
     return NextResponse.json(result, { status: 201 });
   } catch (error: unknown) {
     console.error("Error adding quote:", error);
-    
+
     if (error instanceof Error) {
-      return NextResponse.json({ error: "Failed to add quote", details: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to add quote", details: error.message },
+        { status: 500 }
+      );
     } else {
-      return NextResponse.json({ error: "Failed to add quote", details: "An unknown error occurred" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to add quote", details: "An unknown error occurred" },
+        { status: 500 }
+      );
     }
   }
 }
@@ -27,9 +51,23 @@ async function POST(request: Request) {
 async function GET() {
   try {
     const quotes = await Quote.find({});
+
     const formattedQuotes = quotes.map((quote) => {
-      const { _id, __v, ...plainQuote } = quote.toObject();
-      return { mongoId: _id.toString(), ...plainQuote };
+      // Destructure quote object
+      const { _id: quoteId, __v, comments, ...plainQuote } = quote.toObject();
+
+      // Format the comments to rename _id to mongoCid
+      const formattedComments = comments.map((comment: any) => {
+        const { _id: commentId, ...plainComment } = comment;
+        return { mongoCid: commentId.toString(), ...plainComment };
+      });
+
+      // Return the formatted quote with mongoId and formatted comments
+      return {
+        mongoId: quoteId.toString(),
+        ...plainQuote,
+        comments: formattedComments,
+      };
     });
 
     return NextResponse.json(formattedQuotes, { status: 200 });

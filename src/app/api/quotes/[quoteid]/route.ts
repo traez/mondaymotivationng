@@ -1,7 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import Quote from "@/lib/modelQuote";
 
-async function GET(request: Request, { params }: { params: { quoteid: string } }) {
+async function GET(
+  request: Request,
+  { params }: { params: { quoteid: string } }
+) {
   try {
     const { quoteid } = params;
     const quote = await Quote.findById(quoteid);
@@ -10,8 +13,21 @@ async function GET(request: Request, { params }: { params: { quoteid: string } }
       return NextResponse.json({ error: "Quote not found" }, { status: 404 });
     }
 
-    const { _id, __v, ...plainQuote } = quote.toObject();
-    const result = { mongoId: _id.toString(), ...plainQuote };
+    // Destructure the quote object
+    const { _id: quoteId, __v, comments, ...plainQuote } = quote.toObject();
+
+    // Format the comments to rename _id to mongoCid
+    const formattedComments = comments.map((comment: any) => {
+      const { _id: commentId, ...plainComment } = comment;
+      return { mongoCid: commentId.toString(), ...plainComment };
+    });
+
+    // Return the formatted quote with mongoId and formatted comments
+    const result = {
+      mongoId: quoteId.toString(),
+      ...plainQuote,
+      comments: formattedComments,
+    };
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
@@ -132,8 +148,21 @@ async function PATCH(
 
     await quote.save();
 
-    const { _id, __v, ...updatedQuote } = quote.toObject();
-    const result = { mongoId: _id.toString(), ...updatedQuote };
+    // Destructure the quote object
+    const { _id: quoteId, __v, comments, ...plainQuote } = quote.toObject();
+
+    // Format the comments to rename _id to mongoCid
+    const formattedComments = comments.map((comment: any) => {
+      const { _id: commentId, ...plainComment } = comment;
+      return { mongoCid: commentId.toString(), ...plainComment };
+    });
+
+    // Return the formatted quote with mongoId and formatted comments
+    const result = {
+      mongoId: quoteId.toString(),
+      ...plainQuote,
+      comments: formattedComments,
+    };
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {

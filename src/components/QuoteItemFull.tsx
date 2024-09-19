@@ -2,13 +2,13 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { User } from "@/lib/typeGetSession";
-import { QuoteWithMongoId } from "@/lib/typeQuote";
+import { QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
 import { deleteQuoteById, voteQuoteById } from "@/lib/handlerQuotes";
 import CommentFull from "./CommentFull";
 
 interface QuoteItemFullProps {
   user: User | null;
-  quote: QuoteWithMongoId;
+  quote: QuoteCommentWithMongoId;
 }
 
 export default function QuoteItemFull({ user, quote }: QuoteItemFullProps) {
