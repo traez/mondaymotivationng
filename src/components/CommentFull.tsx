@@ -8,7 +8,11 @@ import { v4 as uuidv4 } from "uuid";
 import { User } from "@/lib/typeGetSession";
 import { Comment, CommentWithMongoId } from "@/lib/typeQuoteComment";
 import { toast } from "sonner";
-import { addComment, deleteCommentById } from "@/lib/handlerQuotes";
+import {
+  addComment,
+  deleteCommentById,
+  updateCommentById,
+} from "@/lib/handlerQuotes";
 
 const commentSchema = z.object({
   text: z
@@ -39,6 +43,7 @@ export default function CommentFull({
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<CommentSchemaType>({
     resolver: zodResolver(commentSchema),
   });
@@ -76,33 +81,33 @@ export default function CommentFull({
   };
 
   const handleEditComment = (commentId: string) => {
-    /* setEditingCommentId(commentId);
-    const commentToEdit = comments.find((comment) => comment.id === commentId);
+    setEditingCommentId(commentId);
+    const commentToEdit = initialComments.find(
+      (comment) => comment.mongoCid === commentId
+    );
     if (commentToEdit) {
-      reset({ text: commentToEdit.text });
-    } */
+      setValue("text", commentToEdit.text);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCommentId(null);
+    reset();
   };
 
   const handleSaveComment = async (data: CommentSchemaType) => {
-    /* if (!editingCommentId) return;
+    if (!editingCommentId) return;
 
     try {
-      // TODO: Implement the API call to update the comment
-      // await updateCommentInQuote(quoteId, editingCommentId, data.text);
-      setComments(
-        comments.map((comment) =>
-          comment.id === editingCommentId
-            ? { ...comment, text: data.text }
-            : comment
-        )
-      );
+      await updateCommentById(quoteId, editingCommentId, data.text);
       toast.success("Comment updated successfully");
       setEditingCommentId(null);
       reset();
+      router.refresh(); // Refresh the page to get updated comments
     } catch (error) {
       toast.error("Failed to update comment");
       console.error("Error updating comment:", error);
-    } */
+    }
   };
 
   const handleDeleteComment = async (commentId: string) => {
@@ -120,25 +125,27 @@ export default function CommentFull({
     <section className="mt-6">
       <h2 className="text-xl font-bold">Comments:</h2>
 
-      {/* Add Comment */}
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex flex-col">
-        <textarea
-          className="p-2 border border-gray-300 rounded-md mb-2 bg-gray-100 text-gray-700"
-          rows={3}
-          maxLength={300}
-          {...register("text")}
-          placeholder="Add a comment..."
-        ></textarea>
-        {errors.text && (
-          <p className="text-red-600 text-sm mb-2">{errors.text.message}</p>
-        )}
-        <button
-          type="submit"
-          className="self-end px-4 py-2 bg-blue-500 hover:bg-blue-800 text-white rounded-lg"
-        >
-          Submit
-        </button>
-      </form>
+      {/* Only show the Add Comment form if no comment is being edited */}
+      {!editingCommentId && (
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex flex-col">
+          <textarea
+            className="p-2 border border-gray-300 rounded-md mb-2 bg-gray-100 text-gray-700"
+            rows={3}
+            maxLength={300}
+            {...register("text")}
+            placeholder="Add a comment..."
+          ></textarea>
+          {errors.text && (
+            <p className="text-red-600 text-sm mb-2">{errors.text.message}</p>
+          )}
+          <button
+            type="submit"
+            className="self-end px-4 py-2 bg-blue-500 hover:bg-blue-800 text-white rounded-lg"
+          >
+            Submit
+          </button>
+        </form>
+      )}
 
       {/* Comment List */}
       <ul className="mt-4 space-y-4">
@@ -147,7 +154,7 @@ export default function CommentFull({
             key={comment.id}
             className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md"
           >
-            {editingCommentId === comment.id ? (
+            {editingCommentId === comment.mongoCid ? (
               <form onSubmit={handleSubmit(handleSaveComment)}>
                 <textarea
                   className="p-2 border border-gray-300 rounded-md mb-2 w-full"
@@ -165,6 +172,13 @@ export default function CommentFull({
                   className="px-4 py-2 bg-green-500 text-white rounded-lg"
                 >
                   Save
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 ml-1 bg-gray-300 text-black rounded-lg"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel
                 </button>
               </form>
             ) : (

@@ -256,6 +256,22 @@ async function deleteCommentById(quoteId: string, commentId: string) {
   }
 }
 
+async function updateCommentById(quoteId: string, commentId: string, newText: string) {
+  const response = await fetch(`/api/quotes/${quoteId}/comments/${commentId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ text: newText }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update comment');
+  }
+
+  return response.json();
+}
+
 export {
   addQuoteEntry,
   fetchQuotes,
@@ -266,4 +282,5 @@ export {
   fetchQuotesByUserEmail,
   addComment,
   deleteCommentById,
+  updateCommentById,
 };
