@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { QuoteWithMongoId } from "@/lib/typeQuote";
+import { QuoteWithMongoId } from "@/lib/typeQuoteComment";
 import { User } from "@/lib/typeGetSession";
 
 interface QuoteItemProps {

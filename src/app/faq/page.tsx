@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import TanstackTable from "@/components/TanstackTable";
 
 export const metadata: Metadata = {
   title: "FAQ Page - Monday Motivation NG",
@@ -11,7 +12,7 @@ const FaqPage = () => {
       <h1 className="text-base sm:text-2xl font-bold text-center border rounded-md">
         Frequently Asked Questions Essay
       </h1>
-      
+      <TanstackTable />
     </div>
   );
 };
