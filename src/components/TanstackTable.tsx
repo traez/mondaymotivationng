@@ -22,44 +22,57 @@ import {
   Phone,
   Search,
   User,
+  Link as LucideLink,
+  Vote,
+  CalendarDays,
+  ScrollText,
 } from "lucide-react";
-import mockData, { UserData } from "@/lib/tanstacktabledata";
+import dataQuotesArray, { QuoteDataType } from "@/lib/tanstacktabledata";
 
-const columnHelper = createColumnHelper<UserData>();
+const columnHelper = createColumnHelper<QuoteDataType>();
 
 const columns = [
-  columnHelper.accessor("id", {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor("motivation", {
+    cell: (info) => {
+      const motivation = info.getValue();
+      return (
+        <span title={motivation}>
+          {motivation.length > 30
+            ? motivation.slice(0, 30) + "..."
+            : motivation}
+        </span>
+      );
+    },
     header: () => (
       <span className="flex items-center">
-        <User className="mr-1" size={16} /> ID
+        <ScrollText className="mr-1" size={16} /> Motivation
       </span>
     ),
   }),
 
-  columnHelper.accessor("name", {
+  columnHelper.accessor("score", {
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center">
-        <User className="mr-1" size={16} /> Name
+        <Vote className="mr-1" size={16} /> Score
       </span>
     ),
   }),
-  columnHelper.accessor("email", {
-    id: "email",
+  columnHelper.accessor("userEmail", {
+    id: "userEmail",
     cell: (info) => (
       <span className="italic text-blue-600">{info.getValue()}</span>
     ),
     header: () => (
       <span className="flex items-center">
-        <Mail className="mr-1" size={16} /> Email
+        <Mail className="mr-1" size={16} /> userEmail
       </span>
     ),
   }),
-  columnHelper.accessor("phone", {
+  columnHelper.accessor("createdAt", {
     header: () => (
       <span className="flex items-center">
-        <Phone className="mr-1" size={16} /> Phone
+        <CalendarDays className="mr-1" size={16} /> createdAt
       </span>
     ),
     cell: (info) => info.getValue(),
@@ -73,12 +86,16 @@ const columns = [
         </button>
       </Link>
     ),
-    header: () => <span>Actions</span>,
+    header: () => (
+      <span className="flex items-center">
+        <LucideLink className="mr-1" size={16} /> Actions
+      </span>
+    ),
   }),
 ];
 
 export default function TanstackTable() {
-  const [data] = useState(() => [...mockData]);
+  const [data] = useState(() => [...dataQuotesArray]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
