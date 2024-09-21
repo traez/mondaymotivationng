@@ -20,27 +20,27 @@ My goal for this project was to create a responsive application with a strong em
 
 ### The Challenge/User Stories
 
-* User Authentication  
+* **User Authentication**  
 - The user should be able to log in using GitHub or Google.  
-* Quote Management  
+* **Quote Management**  
 - The user should be able to submit their favorite motivational quotes.
 - The user should be able to edit or delete their own quotes.
 - The user should be able to sort quotes based on various criteria (e.g., upvotes, date created, etc.).     
-* Voting System  
+* **Voting System**  
 - The user should be able to upvote or downvote quotes to indicate their agreement or disagreement.
 - Each user should only be allowed to vote once per quote but can change their vote.   
-* Commenting System
+* **Commenting System**
 - The user should be able to leave comments on any quote.
 - The user should be able to edit or delete their own comments.    
-* User Profile & Interaction  
+* **User Profile & Interaction**  
 - The user should be able to visit a page that groups quotes by the users who created them.
 - The user should be able to view individual quotes on their own pages, along with all related comments and votes.
 - The user should be able to view other users’ profiles and their contributed quotes.   
-* Theme Preference  
+* **Theme Preference**  
 - The user should be able to toggle between light mode and dark mode for a personalized viewing experience.   
-* Community Engagement  
+* **Community Engagement**  
 - The user should be able to engage with the community by commenting on quotes and participating in conversations with other users.   
-* Source Code & Project Links  
+* **Source Code & Project Links**  
 - The user should be able to access links to the project’s source code and other projects developed by Trae Zeeofor via the footer.    
 
 ### Screenshot
@@ -49,8 +49,8 @@ My goal for this project was to create a responsive application with a strong em
 
 ### Links
 
-- Solution URL: [https://github.com/traez/nigerian-inflation-tracker-2024](https://github.com/traez/nigerian-inflation-tracker-2024)
-- Live Site URL: [https://nigerian-inflation-tracker-2024.vercel.app/](https://nigerian-inflation-tracker-2024.vercel.app/)
+- Solution URL: [https://github.com/traez/mondaymotivationng](https://github.com/traez/mondaymotivationng)
+- Live Site URL: [https://mondaymotivationng.vercel.app/](https://mondaymotivationng.vercel.app/)
 
 ## My process
 
@@ -66,44 +66,47 @@ My goal for this project was to create a responsive application with a strong em
 - Typescript
 - Nodejs  
 - MongoDB/Mongoose     
-- Auth.js (NextAuth)  
-- Shadcn UI      
+- Auth.js (NextAuth)       
 - react-hook-form      
 - Tanstack     
-- react-icons     
+- react-icons   
+- lucide-react    
 - sonner  
 - uuid  
 - zod       
 
 ### What I learned
    
-- **File Extensions for JavaScript and JSX**  
-Use .js for files containing plain JavaScript without JSX syntax.  
-Use .jsx for files that include JSX, embedding HTML-like syntax directly within JavaScript.  
-For TypeScript, use .tsx and .ts      
-- **UUID Package Installation**  
-`npm install uuid` to generate unique identifiers.  
-`npm i @types/uuid` for TypeScript projects, providing type definitions and enhancing code completion and type checking.  
-- **Global State Management vs. Server-Side Rendering (SSR)**  
-In purely front-end development, tools like Redux Toolkit and Context API were essential for managing global state.  
-Transitioning to full-stack development with SSR changes the approach: global state management becomes less critical, with user preferences and state managed through database storage, props, cookies, and URL parameters.    
-- **Handling MongoDB ObjectId Serialization**  
-Encountered an issue with MongoDB’s ObjectId not being serializable to JSON, causing client-side errors.  
-Resolved by modifying server actions to return plain objects, excluding MongoDB-specific types, ensuring compatibility and avoiding serialization issues.      
-- **Sonner vs. React-Toastify for Notifications**  
-Explored using Sonner for toast notifications as an alternative to React-Toastify.  
-- **Future Enhancements**   
-Authentication: Separate registration and login functionalities for a more user-friendly experience.    
-- **Responsive Design Best Practices**  
-Adopted design strategies for three breakpoints (320px, 640px, 1280px) in Figma, with the first as an edge case and the latter two as Tailwind CSS defaults.    
-- **Tanstack Tables**  
-Gained experience working with Tanstack Tables, deepening my understanding of table management in React.    
-- **React Imports and Namespace Usage**  
-`import * as React from "react"`; is beneficial in TypeScript projects or specific build environments, ensuring all React components, hooks, and utilities are accessible under the React namespace.    
-Additionally, this import style supports efficient tree-shaking, allowing bundlers to remove unused code and optimize the final output. It also ensures compatibility with various build tools and older configurations, making it a versatile choice for both modern and legacy React projects.   
-- **Comprehensive Understanding of Full-Stack Development**  
-Completing this project provided clarity on the practical use of server components alongside client components.  
-Gained confidence in how authentication, backend storage, data fetching, and UI responsiveness work together in a full-stack app—areas I was previously uncertain about.  
+ - **Tailwind CSS Dark Mode Configuration**  
+The `darkMode: ["class"]` configuration still works in Tailwind CSS because the Tailwind team retained backward compatibility for the class strategy, even though they introduced the new selector strategy in version 3.4.1 `(darkMode: 'selector')`.   
+ - **Flexbox Layout for Conditional Scrollbars**  
+To ensure vertical scroll lines appear only when necessary, set the `<body>` class to `flex flex-col min-h-screen`. Then, aside from the Header-Nav and Footer, set the `<Page>` element to `flex flex-grow`, so it expands to cover extra space in the container. The scrollbar will only appear as content grows and it becomes necessary.  
+ - **AI Tools for Next.js Support**  
+`v0.dev` AI has been really helpful in answering Next.js-related questions alongside ChatGPT, with `gptengineer.app` being a good alternative. Since both have usage limits, combining them provides a good second opinion after ChatGPT.   
+ - **@hookform/resolvers Integration**  
+`@hookform/resolvers` is a package that provides a set of resolvers to integrate external validation libraries with `react-hook-form`. It acts as a bridge between `react-hook-form`'s form handling capabilities and popular schema validation libraries like Zod, etc.   
+ - **Absolute URLs in Server Components**  
+In Next.js, relative URLs only work in client components. In server components, URLs must be absolute.   
+ - **Centering Grid Items with Flexbox**  
+You can use Flexbox’s `justify-items: center;` to further center each grid item within its cell.  
+ - **Benefits of Using <Link> in Next.js**  
+In Next.js, using the `<Link>` component for internal navigation is generally preferred over `useRouter` due to its advantages in performance and SEO. `<Link>` automatically prefetches pages, enhancing loading speeds and user experience. It also works seamlessly with Next.js's code-splitting for efficient JavaScript loading, improves SEO by helping search engines better understand site structure, and enhances accessibility by default. Additionally, `<Link>` provides a simpler and more intuitive API for handling navigation compared to the more manual approach of `useRouter`.  
+ - **Accessing Dynamic Route Parameters in Server Components**  
+In server components, you can access dynamic route parameters directly through the `params` argument, which is automatically provided by Next.js when the component is rendered. For example, in the code `export default function Page({ params }: { params: { slug: string } }),` the `params` object contains the dynamic values from the URL (in this case, `slug`), allowing you to use `params.slug` within the server component without needing to rely on client-side hooks like `useParams`. This is especially useful for pre-rendering and server-side logic. `useParams` is a client component hook that lets you read a route's dynamic params filled in by the current URL.   
+ - **API Route Design in Next.js**  
+ **Key Rules for Creating API Routes:** Design routes to represent resources, and then use appropriate HTTP Methods for different operations (GET, POST, PATCH, DELETE).
+ **Parent and Child Routes:** For hierarchical resources, nest the routes properly.
+`app/api/quotes/route.ts`: This is the correct place for handling operations on quotes as a collection, such as fetching all quotes or creating a new quote.  
+`app/api/quotes/[id]/route.ts`: This is correct for handling operations on an individual quote, such as fetching, deleting, or updating a specific quote.  
+`app/api/quotes/useremails/route.ts`: Makes sense as a dedicated route to handle fetching distinct userEmail properties, as it's a special query unrelated to CRUD operations on individual quotes.     
+ - **ShadCN Best Practices and Native Styles**  
+Even though ShadCN has helped set a lot of best practice standards (my personal stack etc). I'm proud that I was able to get through this project without using ShadCN itself. I applied styles natively and used its 3rd-party dependencies like Zod, react-hook-form, and TanStack etc directly.  
+ - **Using Lucide-React for Icons**  
+I used lucide-react independently of ShadCN, as it's very popular for icons across the board.   
+ - **Array<UserData> vs UserData[]**  
+`Array<UserData>` is more generic and readable, especially for complex types. `UserData[]` is the shorthand and often preferred for its brevity. Recommendation: Choose one based on personal or team preference and maintain consistency throughout your codebase.   
+ - **Renaming Imports in React for Clarity**  
+Renaming imports in React avoids conflicts and improves clarity. For example, when two libraries export Link, you can rename one: import { Link as LucideLink } from "lucide-react"; This lets you use both without issues. Renaming is useful for preventing collisions and making code more readable.   
 
 ### Continued development
 
