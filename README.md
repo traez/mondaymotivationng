@@ -1,4 +1,4 @@
-# Nigerian Inflation Tracker 2024
+# Monday Motivation NG
 
 My goal for this project was to create a responsive application with a strong emphasis on user experience, data visualization, secure authentication, and data persistence. To achieve this, I aimed to integrate APIs, implement robust data handling, and leverage state management tools, all while ensuring reliable backend storage for data preservation. In all I'm practicing and developing my coding competency by building projects after projects.
 
@@ -20,16 +20,28 @@ My goal for this project was to create a responsive application with a strong em
 
 ### The Challenge/User Stories
 
-- User should be able to log in with GitHub or Google.  
-- User should be able to view crowdsourced inflation data on the homepage.  
-- User should be able to view inflation data by category (purchase purpose).  
-- User should be able to view inflation data by Nigerian State.  
-- User should be able to view data by individual users to see reporting trends.  
-- User should be able to add new inflation data listings.  
-- User should be able to edit their own inflation data listings.  
-- User should be able to delete their own inflation data listings.  
-- User should be able to switch between light and dark themes.  
-- User should be able to access the project source code and view other projects by the website admin.   
+* User Authentication  
+- The user should be able to log in using GitHub or Google.  
+* Quote Management  
+- The user should be able to submit their favorite motivational quotes.
+- The user should be able to edit or delete their own quotes.
+- The user should be able to sort quotes based on various criteria (e.g., upvotes, date created, etc.).     
+* Voting System  
+- The user should be able to upvote or downvote quotes to indicate their agreement or disagreement.
+- Each user should only be allowed to vote once per quote but can change their vote.   
+* Commenting System
+- The user should be able to leave comments on any quote.
+- The user should be able to edit or delete their own comments.    
+* User Profile & Interaction  
+- The user should be able to visit a page that groups quotes by the users who created them.
+- The user should be able to view individual quotes on their own pages, along with all related comments and votes.
+- The user should be able to view other users’ profiles and their contributed quotes.   
+* Theme Preference  
+- The user should be able to toggle between light mode and dark mode for a personalized viewing experience.   
+* Community Engagement  
+- The user should be able to engage with the community by commenting on quotes and participating in conversations with other users.   
+* Source Code & Project Links  
+- The user should be able to access links to the project’s source code and other projects developed by Trae Zeeofor via the footer.    
 
 ### Screenshot
 

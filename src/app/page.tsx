@@ -1,8 +1,12 @@
 import { getSession } from "@/lib/getSession";
-import AllQuotes from "@/components/AllQuotes";
+/* import AllQuotes from "@/components/AllQuotes"; */
+import TanstackTable from "@/components/TanstackTable";
+import { QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
+import { fetchQuotes } from "@/lib/handlerQuotes";
 
 export default async function Home() {
   const session = await getSession();
+  const fetchedQuotes: QuoteCommentWithMongoId[] = await fetchQuotes();
 
   return (
     <main className="flex-grow flex-col items-center justify-between p-2 bg-slate-100 dark:bg-gray-500">
@@ -22,7 +26,8 @@ export default async function Home() {
           </div>
         )}
       </div>
-      <AllQuotes user={session?.user || null} />
+     {/*  <AllQuotes user={session?.user || null} /> */}
+      <TanstackTable dataQuotes={fetchedQuotes} />
     </main>
   );
 }

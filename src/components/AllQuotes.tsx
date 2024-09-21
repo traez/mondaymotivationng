@@ -1,5 +1,5 @@
 import { User } from "@/lib/typeGetSession";
-import { QuoteWithMongoId,QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
+import { QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
 import { fetchQuotes } from "@/lib/handlerQuotes";
 import QuoteItem from "./QuoteItem";
 

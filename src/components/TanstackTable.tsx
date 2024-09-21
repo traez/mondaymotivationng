@@ -19,17 +19,21 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Mail,
-  Phone,
   Search,
-  User,
   Link as LucideLink,
   Vote,
   CalendarDays,
   ScrollText,
 } from "lucide-react";
-import dataQuotesArray, { QuoteDataType } from "@/lib/tanstacktabledata";
+/* import dataQuotesArray, { QuoteDataType } from "@/lib/tanstacktabledata"; */
+import { QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
 
-const columnHelper = createColumnHelper<QuoteDataType>();
+/* const columnHelper = createColumnHelper<QuoteDataType>(); */
+const columnHelper = createColumnHelper<QuoteCommentWithMongoId>();
+
+interface TanstackTableProps {
+  dataQuotes: QuoteCommentWithMongoId[];
+}
 
 const columns = [
   columnHelper.accessor("motivation", {
@@ -94,8 +98,11 @@ const columns = [
   }),
 ];
 
-export default function TanstackTable() {
-  const [data] = useState(() => [...dataQuotesArray]);
+/* export default function TanstackTable() {
+  const [data] = useState(() => [...dataQuotesArray]); */
+
+export default function TanstackTable({ dataQuotes }: TanstackTableProps) {
+  const [data] = useState(() => [...dataQuotes]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
@@ -122,13 +129,13 @@ export default function TanstackTable() {
 
   return (
     <>
-      <section className="flex flex-col min-h-[400px] mx-auto py-8 px-4 overflow-x-auto w-[90%]">
+      <section className="flex flex-col min-h-[400px] mx-auto py-8 px-4 overflow-x-auto w-[90%] bg-slate-100 dark:bg-gray-500">
         <nav className="mb-4 relative">
           <input
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full pl-10 pr-4 py-2 text-black bg-white dark:bg-gray-300 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -138,13 +145,13 @@ export default function TanstackTable() {
 
         <div className="overflow-x-auto bg-white shadow-md rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-white dark:bg-gray-300">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-3 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                     >
                       <div
                         {...{
@@ -165,7 +172,7 @@ export default function TanstackTable() {
                 </tr>
               ))}
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-gray-300 divide-y divide-gray-200">
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50">
                   {row.getVisibleCells().map((cell) => (
@@ -185,11 +192,11 @@ export default function TanstackTable() {
           </table>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm text-gray-700">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm text-black">
           <div className="flex items-center mb-4 sm:mb-0">
             <span className="mr-2">Items per page</span>
             <select
-              className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+              className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 text-black bg-white dark:bg-gray-300"
               value={table.getState().pagination.pageSize}
               onChange={(e) => {
                 table.setPageSize(Number(e.target.value));
@@ -230,9 +237,9 @@ export default function TanstackTable() {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0;
                   table.setPageIndex(page);
                 }}
-                className="w-12 p-2 rounded-md border border-gray-300 text-center"
+                className="w-12 p-2 rounded-md border text-black bg-white dark:bg-gray-300 border-gray-300 text-center"
               />
-              <span className="ml-2">of {table.getPageCount()}</span>
+              <span className="mx-2">of {table.getPageCount()}</span>
             </span>
 
             <button

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { User } from "@/lib/typeGetSession";
 import { fetchQuotesByUserEmail } from "@/lib/handlerQuotes";
-import { QuoteWithMongoId } from "@/lib/typeQuote";
+import { QuoteWithMongoId } from "@/lib/typeQuoteComment";
 import QuoteItem from "./QuoteItem";
 
 interface UserQuotesProps {

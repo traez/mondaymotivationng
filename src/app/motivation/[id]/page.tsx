@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import QuoteItemFull from "@/components/QuoteItemFull";
 import { fetchQuoteById } from "@/lib/handlerQuotes";
-import { QuoteWithMongoId } from "@/lib/typeQuote";
+import { QuoteCommentWithMongoId } from "@/lib/typeQuoteComment";
 import { getSession } from "@/lib/getSession";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default async function MotivationPage({
   params: { id: string };
 }) {
   const session = await getSession();
-  const fetchedQuote: QuoteWithMongoId = await fetchQuoteById(params.id);
+  const fetchedQuote: QuoteCommentWithMongoId = await fetchQuoteById(params.id);
 
   return (
     <div className="flex flex-grow flex-col justify-start gap-4 sm:gap-8 p-4 bg-slate-100 dark:bg-gray-500">
