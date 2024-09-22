@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import Quote from "@/lib/modelQuote";
+import dbConnect from "@/lib/dbconnect";
 
 async function POST(
   request: Request,
   { params }: { params: { quoteid: string } }
 ) {
+  await dbConnect();
   try {
     const { quoteid } = params;
     const commentData = await request.json();

@@ -1,10 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import Quote from "@/lib/modelQuote";
+import dbConnect from "@/lib/dbconnect";
 
 async function GET(
   request: Request,
   { params }: { params: { quoteid: string } }
 ) {
+  await dbConnect();
   try {
     const { quoteid } = params;
     const quote = await Quote.findById(quoteid);
@@ -54,6 +56,7 @@ async function DELETE(
   request: Request,
   { params }: { params: { quoteid: string } }
 ) {
+  await dbConnect();
   try {
     const { quoteid } = params;
     const deletedQuote = await Quote.findByIdAndDelete(quoteid);
@@ -90,6 +93,7 @@ async function PATCH(
   request: NextRequest,
   { params }: { params: { quoteid: string } }
 ) {
+  await dbConnect();
   try {
     const { quoteid } = params;
     const { userEmailSplit, voteType } = await request.json();

@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import Quote from "@/lib/modelQuote";
+import dbConnect from "@/lib/dbconnect";
 
 async function GET() {
+  await dbConnect();
   try {
     const userEmails = await Quote.distinct("userEmail");
     return NextResponse.json(userEmails, { status: 200 });

@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import Quote from "@/lib/modelQuote";
 import { QuoteSchemaType } from "@/components/AddQuote";
+import dbConnect from "@/lib/dbconnect";
 
 async function POST(request: Request) {
+  await dbConnect();
   try {
     const quoteData: QuoteSchemaType = await request.json();
 
@@ -49,6 +51,7 @@ async function POST(request: Request) {
 }
 
 async function GET() {
+  await dbConnect();
   try {
     const quotes = await Quote.find({});
 

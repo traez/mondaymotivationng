@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import Quote from "@/lib/modelQuote";
+import dbConnect from "@/lib/dbconnect";
 
 export async function GET(request: Request) {
+  await dbConnect();
   try {
     const url = new URL(request.url);
     const userEmail = url.searchParams.get('userEmail');
