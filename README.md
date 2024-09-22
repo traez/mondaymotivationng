@@ -107,6 +107,8 @@ I used lucide-react independently of ShadCN, as it's very popular for icons acro
 `Array<UserData>` is more generic and readable, especially for complex types. `UserData[]` is the shorthand and often preferred for its brevity. Recommendation: Choose one based on personal or team preference and maintain consistency throughout your codebase.   
  - **Renaming Imports in React for Clarity**  
 Renaming imports in React avoids conflicts and improves clarity. For example, when two libraries export Link, you can rename one: import { Link as LucideLink } from "lucide-react"; This lets you use both without issues. Renaming is useful for preventing collisions and making code more readable.   
+ - **Ensuring Consistent Database Connections for API Routes in Production**  
+I encountered an issue where my API routes timed out in production (504) due to missing MongoDB connections. In development, routes worked without error, but in production, each route needed a new connectDb() call. Unlike server actions where I connected once in the layout, I had to connect for every API call here. This caused Vercel's function to timeout in production. Ensure you connect to the database on each route to avoid this problem.  
 
 ### Continued development
 
