@@ -107,7 +107,7 @@ export default function TanstackTable({ dataQuotes }: TanstackTableProps) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 20,
   });
 
   const table = useReactTable({
